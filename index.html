@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .heading {
+            text-align: center;
+        }
+
+        input[type='number'] {
+            max-width: 7em;
+        }
+    </style>
+    <title>
+        Skatrechner
+    </title>
+</head>
+
+<body>
+
+    <body class="bg-light">
+        <div class="container">
+            <div class="py-5 text-center">
+                <h2>Skatrechner</h2>
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                    <th><label class="heading">Spieler 1</label></th>
+                    <th><label class="heading">Spieler 2</label></th>
+                    <th><label class="heading">Spieler 3</label></th>
+                    <th><label class="heading">Spieler 4</label></th>
+                    <th><label class="heading">Spieler 5</label></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input id="score0" class="form-control" type="number"></input></td>
+                        <td><input id="score1" class="form-control" type="number"></input></td>
+                        <td><input id="score2" class="form-control" type="number"></input></td>
+                        <td><input id="score3" class="form-control" type="number"></input></td>
+                        <td><input id="score4" class="form-control" type="number"></input></td>
+                    </tr>
+                    <tr>
+                        <td><label id="result0">0</label></td>
+                        <td><label id="result1">0</label></td>
+                        <td><label id="result2">0</label></td>
+                        <td><label id="result3">0</label></td>
+                        <td><label id="result4">0</label></td>
+                    </tr>
+                </tbody>
+            </table>
+    </body>
+</body>
+<footer>
+    <script type="application/javascript">
+        const MIN_PLAYERS = 3;
+        const MAX_PLAYERS = 5;
+
+        const calc = (scores) => scores.map((base) => scores.reduce((prev, cur) => (prev + (base - cur)), 0));
+
+        const update = () => {
+            const scores = [];
+            for (let i = 0; i < MAX_PLAYERS; ++i) {
+                const val = document.getElementById('score' + i).value;
+                if (val === "" && i >= MIN_PLAYERS) break;
+                scores[i] = Number(val || 0);
+            }
+            const result = calc(scores);
+            for (let i = 0; i < MAX_PLAYERS; ++i) {
+                document.getElementById('result' + i).innerHTML = result[i] === undefined ? "" : String(result[i]);
+            }
+        }
+
+        for (let i = 0; i < MAX_PLAYERS; ++i) {
+            document.getElementById('score' + i).addEventListener("change", _ => update());
+        }
+    </script>
+</footer>
+
+</html>
